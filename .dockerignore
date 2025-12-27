@@ -1,0 +1,16 @@
+# Docker volumes for persistent data
+static/
+
+# Python cache
+__pycache__/
+
+# Logs directory
+logs/
+
+# IDE and editor files
+.vscode/
+.idea/
+
+# OS generated files
+.DS_Store
+Thumbs.db

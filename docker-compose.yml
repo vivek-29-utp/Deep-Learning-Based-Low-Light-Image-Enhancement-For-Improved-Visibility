@@ -1,0 +1,18 @@
+version: '3.8'
+
+services:
+  zero-dce-enhancement:
+    build: .
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./static:/app/static
+      - ./checkpoints:/app/checkpoints
+    environment:
+      - FLASK_ENV=production
+      - PYTHONUNBUFFERED=1
+    restart: unless-stopped
+    
+networks:
+  default:
+    driver: bridge

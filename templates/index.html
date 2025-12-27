@@ -1,0 +1,85 @@
+﻿<!DOCTYPE html>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <title>Deep Learning Based Image Enhancement For Improved Visibility</title>
+    <link rel='stylesheet' href='{{ url_for('static', filename='css/style.css') }}'>
+</head>
+<body>
+    <div class='container'>
+        <div class='footer'>
+            <p>Deep Learning Based Image Enhancement for Improved Visibility</p>
+            <p>Self-Supervised Deep Learning Implementation</p>
+        </div>
+
+        <div class='upload-section'>
+            <h2>Upload Low-Light Image</h2>
+            <div class='info-box'>
+                <h4>About This System</h4>
+                <p>This system enhances low-light images using a self-supervised deep learning approach.
+                    It does not require paired ground truth images. The model learns adaptive illumination
+                    curves to improve visibility while preserving natural color and texture details.</p>
+            </div>
+            
+            <form method='post' enctype='multipart/form-data' action='/enhance'>
+                <div class='upload-area'>
+                    <input type='file' name='image' accept='image/*' required>
+                    <p>Click to browse or drag and drop your low-light image here</p>
+                    <p><small>Supported formats: JPG, PNG, BMP (Max 10MB)</small></p>
+                </div>
+                <button type='submit' class='upload-btn'>Enhance Image</button>
+            </form>
+        </div>
+
+        {% if results %}
+        <div class='results-section' style='display: block;'>
+            <h2>Enhancement Results</h2>
+            
+            {% if error %}
+            <div class='error-message'>
+                <strong>Error:</strong> {{ error }}
+            </div>
+            {% else %}
+            <div class='success-message'>
+                <strong>Success!</strong> Image enhanced using adaptive enhancement system.
+            </div>
+            
+            <div class='image-comparison'>
+                <div class='image-container'>
+                    <h3>Original Low-Light Image</h3>
+                    <img src='{{ url_for('static', filename='uploads/' + results.original_filename) }}' 
+                         alt='Original Image' onclick='window.open(this.src)'>
+                </div>
+                <div class='image-container'>
+                    <h3>Enhanced Image</h3>
+                    <img src='{{ url_for('static', filename='results/' + results.enhanced_filename) }}' 
+                         alt='Enhanced Image' onclick='window.open(this.src)'>
+                </div>
+            </div>
+            
+            <div style='text-align: center; margin-top: 30px;'>
+                <a href='{{ url_for('static', filename='results/' + results.enhanced_filename) }}' 
+                   download='enhanced_{{ results.original_filename }}' 
+                   class='download-btn'>Download Enhanced Image</a>
+                <a href='{{ url_for('index') }}' class='upload-btn'>Enhance Another Image</a>
+            </div>
+            
+            <div class='info-box'>
+                <h4>Enhancement Details</h4>
+                <p><strong>Approach:</strong> Self-Supervised Deep Learning</p>
+                <p><strong>Enhancement Type:</strong> Conservative (stability-focused)</p>
+                <p><strong>Iterations:</strong> 8 curve applications</p>
+                <p><strong>Philosophy:</strong> Natural enhancement without over-brightening</p>
+            </div>
+            </div>
+            {% endif %}
+        </div>
+        {% endif %}
+
+        <div class='footer'>
+            <p>Zero-DCE++ Low-Light Enhancement System | Self-Supervised Deep Learning Implementation</p>
+        </div>
+    </div>
+</body>
+</html>
